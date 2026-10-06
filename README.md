@@ -18,6 +18,11 @@
 
 \# 🧾 Invoice Reconciliation Agent
 
+[![Live API](https://img.shields.io/badge/Live%20API-Render-46E3B7?logo=render&logoColor=white)](https://aws-invoice-agent.onrender.com)
+[![AWS Bedrock](https://img.shields.io/badge/AWS-Bedrock-FF9900?logo=amazonaws&logoColor=white)](https://aws.amazon.com/bedrock/)
+[![Strands](https://img.shields.io/badge/Strands-Agents%20SDK-232F3E?logo=amazonaws&logoColor=white)](https://strandsagents.com/)
+[![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
 
 \### by \*\*Anio Joseph\*\*
@@ -228,7 +233,19 @@ The agent runs \*\*autonomously\*\* — the accountant only gets involved when t
 
 \---
 
+## 🌐 Live API
 
+🚀 **Try it live:** **[https://aws-invoice-agent.onrender.com](https://aws-invoice-agent.onrender.com)**
+
+**Endpoints:**
+- `GET /` — health check
+- `POST /reconcile` — reconcile an invoice
+
+**Example request:**
+```bash
+curl -X POST "https://aws-invoice-agent.onrender.com/reconcile" \
+  -H "Content-Type: application/json" \
+  -d '{"invoice_text": "Invoice #INV-2026-0042\nSupplier: Acme Supplies Ltd.\nPO Reference: PO-2026-0117\nAmount: $1,250.00\nVAT: $250.00"}'
 
 \## 🚀 Quick Start
 
