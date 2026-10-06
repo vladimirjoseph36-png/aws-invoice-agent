@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alexa+ · Invoice Agent — by Anio Joseph</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/alexa.css">
+</head>
+<body>
+
+  <!-- Animated background -->
+  <canvas id="bg-canvas" class="bg-canvas"></canvas>
+  <div class="bg-layer bg-grid"></div>
+  <div class="bg-layer bg-scan"></div>
+  <div class="bg-layer bg-glow"></div>
+
+  <!-- Intro animation (will fade out automatically) -->
+  <div class="intro" id="intro">
+    <canvas id="intro-canvas"></canvas>
+    <div class="intro-logo" id="intro-logo">A+</div>
+    <div class="intro-subtitle">INITIALIZING SYSTEM</div>
+  </div>
+
+  <!-- Main app -->
+  <div class="app" id="app">
+    <header>
+      <div class="logo">
+        <span class="logo-ring"></span>
+        <span class="logo-text">A+</span>
+      </div>
+      <div class="title-block">
+        <h1>ALEXA+ <span class="sim-label">SIMULATION</span></h1>
+        <p>
+          <span class="status-dot"></span>
+          INVOICE RECONCILIATION AGENT
+          <span class="sep">·</span>
+          <span class="author">by Anio Joseph</span>
+        </p>
+      </div>
+      <div class="hud">
+        <div class="hud-line"></div>
+        <div class="hud-text">SYSTEM · ONLINE</div>
+      </div>
+    </header>
+
+    <div class="chat" id="chat">
+      <div class="message agent">
+        <div class="avatar">A+</div>
+        <div class="bubble">
+          <div class="bubble-title">▶ SYSTEM READY</div>
+          I am your simulated Alexa+ assistant.<br>
+          Try saying: <em>"Alexa, reconcile invoice INV-2026-0042"</em>
+        </div>
+      </div>
+    </div>
+
+    <div class="composer">
+      <button id="mic" title="Click to speak">
+        <span class="mic-inner">🎤</span>
+      </button>
+      <div class="input-wrap">
+        <span class="input-prompt">&gt;</span>
+        <input type="text" id="input" placeholder="Speak or type a command…" autocomplete="off" />
+      </div>
+      <button id="send">
+        SEND <span class="arrow">→</span>
+      </button>
+    </div>
+  </div>
+
+  <script src="/static/js/alexa.js"></script>
+</body>
+</html>
