@@ -6,7 +6,7 @@ purchase orders (POs), detects anomalies, and notifies the accountant.
 
 Built with:
     - Strands Agents SDK (AWS)
-    - Amazon Bedrock (Claude 3.5 Sonnet)
+    - Amazon Bedrock (Claude Sonnet 4.6)
 
 Author:
     Anio Joseph
@@ -16,8 +16,17 @@ Project:
 """
 
 import logging
+import os
 import sys
 
+# ----------------------------------------------------------------------
+# Load environment variables FIRST (before any AWS import)
+# ----------------------------------------------------------------------
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# Now AWS credentials are available to boto3
 from strands import Agent
 from strands.models import BedrockModel
 
@@ -26,6 +35,7 @@ from tools.find_purchase_order import find_purchase_order
 from tools.compare_amounts import compare_amounts
 from tools.send_alert import send_alert
 from tools.mark_as_approved import mark_as_approved
+from utils.style import banner, section, ok, info, Colors
 
 
 # ----------------------------------------------------------------------
@@ -83,10 +93,14 @@ def build_agent() -> Agent:
     Returns:
         A configured :class:`strands.Agent` instance.
     """
-    # Bedrock model (Claude 3.5 Sonnet)
+    region = os.getenv("AWS_REGION", "us-east-1")
+    model_id = os.getenv("BEDROCK_MODEL_ID", "anthropic.claude-sonnet-4-6")
+
+    logger.info("Using Bedrock model: %s (region: %s)", model_id, region)
+
     model = BedrockModel(
-        model_id="anthropic.claude-3-5-sonnet-20241022-v2:0",
-        region_name="us-east-1",
+        model_id=model_id,
+        region_name=region,
     )
 
     agent = Agent(
@@ -109,9 +123,19 @@ def build_agent() -> Agent:
 
 def main() -> None:
     """Run a demo reconciliation on a sample invoice."""
+    # --- Banner ---
+    print()
+    print(banner(
+        "Invoice Reconciliation Agent",
+        "AWS Agents for Humans Hackathon 2026  —  by Anio Joseph",
+    ))
+    print()
+
+    # --- Build the agent ---
     logger.info("Building Invoice Reconciliation Agent...")
     agent = build_agent()
 
+    # --- Invoice to process ---
     sample_invoice = (
         "Please reconcile this invoice:\n"
         "Invoice #INV-2026-0042\n"
@@ -122,9 +146,25 @@ def main() -> None:
         "Items: 5x Widget A, 2x Widget B\n"
     )
 
+    print(section("Processing invoice INV-2026-0042"))
+    print(f"  {Colors.DIM}Supplier : Acme Supplies Ltd.{Colors.RESET}")
+    print(f"  {Colors.DIM}Amount   : $1,250.00{Colors.RESET}")
+    print(f"  {Colors.DIM}VAT      : $250.00{Colors.RESET}")
+    print(f"  {Colors.DIM}PO Ref   : PO-2026-0117{Colors.RESET}")
+    print()
+
+    # --- Run the agent ---
     logger.info("Sending invoice to agent...")
     response = agent(sample_invoice)
-    logger.info("Agent response:\n%s", response)
+
+    # --- Final summary ---
+    print()
+    print(section("Final report"))
+    print()
+    print(response)
+    print()
+    print(ok("Reconciliation complete."))
+    print()
 
 
 if __name__ == "__main__":

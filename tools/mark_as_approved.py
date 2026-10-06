@@ -1,29 +1,27 @@
-"""
+﻿"""
 Tool: mark_as_approved
 
 Marks an invoice as approved after successful reconciliation.
-In production this would update a database record.
-For the demo, we log the approval and keep an in-memory list.
 """
 
 import logging
 from datetime import datetime, timezone
 from typing import Any
 
+from strands import tool
+
 logger = logging.getLogger("invoice-agent.approval")
 
 _APPROVED_INVOICES: list[dict[str, Any]] = []
 
 
+@tool
 def mark_as_approved(invoice_id: str) -> dict[str, Any]:
     """
     Mark an invoice as approved.
 
-    Args:
-        invoice_id: The ID of the invoice to approve.
-
-    Returns:
-        A dictionary confirming the approval.
+    Use this tool ONLY when compare_amounts confirms the invoice
+    matches the PO with no anomalies.
     """
     timestamp = datetime.now(timezone.utc).isoformat()
     record = {"invoice_id": invoice_id, "approved_at": timestamp}

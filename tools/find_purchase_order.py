@@ -1,14 +1,14 @@
-"""
+﻿"""
 Tool: find_purchase_order
 
-Looks up a purchase order (PO) by its reference in an in-memory
-database. In production this would query DynamoDB or RDS.
+Looks up a purchase order (PO) by its reference.
 """
 
 from typing import Any
 
+from strands import tool
 
-# In-memory PO database (demo data)
+
 _PO_DATABASE: dict[str, dict[str, Any]] = {
     "PO-2026-0117": {
         "po_reference": "PO-2026-0117",
@@ -29,15 +29,13 @@ _PO_DATABASE: dict[str, dict[str, Any]] = {
 }
 
 
+@tool
 def find_purchase_order(po_reference: str) -> dict[str, Any]:
     """
     Find a purchase order by its reference.
 
-    Args:
-        po_reference: The PO reference (e.g. "PO-2026-0117").
-
-    Returns:
-        The PO dictionary, or {"found": False} if not found.
+    Use this tool AFTER extracting the invoice to locate the
+    matching purchase order in the database.
     """
     po = _PO_DATABASE.get(po_reference)
     if not po:

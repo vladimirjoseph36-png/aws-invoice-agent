@@ -1,4 +1,4 @@
-"""
+﻿"""
 Tool: compare_amounts
 
 Compares an invoice against its matching purchase order and
@@ -7,7 +7,10 @@ returns a list of anomalies (or an empty list if everything matches).
 
 from typing import Any
 
+from strands import tool
 
+
+@tool
 def compare_amounts(
     invoice_amount: float,
     invoice_vat: float,
@@ -15,16 +18,9 @@ def compare_amounts(
     po_vat: float,
 ) -> dict[str, Any]:
     """
-    Compare invoice amounts with PO amounts.
+    Compare invoice amounts with PO amounts and detect anomalies.
 
-    Args:
-        invoice_amount: Total amount on the invoice.
-        invoice_vat: VAT on the invoice.
-        po_amount: Expected total amount on the PO.
-        po_vat: Expected VAT on the PO.
-
-    Returns:
-        A dictionary with: matches (bool), anomalies (list of dicts).
+    Use this tool AFTER finding the PO to verify the invoice matches.
     """
     anomalies: list[dict[str, Any]] = []
 

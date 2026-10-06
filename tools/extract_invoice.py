@@ -1,4 +1,4 @@
-"""
+﻿"""
 Tool: extract_invoice
 
 Extracts structured data from a supplier invoice (text or PDF).
@@ -9,17 +9,15 @@ Bedrock Claude with vision. Here we use a deterministic parser.
 import re
 from typing import Any
 
+from strands import tool
 
+
+@tool
 def extract_invoice(invoice_text: str) -> dict[str, Any]:
     """
     Extract structured data from an invoice text.
 
-    Args:
-        invoice_text: The raw invoice content (text form).
-
-    Returns:
-        A dictionary with: invoice_id, supplier, po_reference,
-        amount, vat, items.
+    Use this tool FIRST whenever you receive an invoice.
     """
     invoice_id = _search(r"Invoice\s*#\s*([A-Z0-9\-]+)", invoice_text)
     supplier = _search(r"Supplier:\s*(.+)", invoice_text)
